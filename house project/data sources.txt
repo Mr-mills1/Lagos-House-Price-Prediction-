@@ -1,0 +1,19 @@
+The dataset for this project was collected professionally using all stastistical approach
+and research methods for data collection and thorough analysis, originally it was obtained
+from two sources i.e Firstly Landmart Realty and Consult, located at Ajasa Street Lagos, it is an 
+organisation charged with the responsibility of sales and rentals of flats, lands and commercial
+property. Secondly CQ Real Estate, Victoria Island lagos, which is one of the leading real estate
+firms in Lagos Nigeria best at consult for luxury rentals, property mangement and sales.
+The data was collected from the comapany organisaton database consisting of sales historical data ranging
+from the period of 2021 to 2024 in excel file format.
+The dataset contains features such as 
+location 
+house_type            
+bedrooms              
+parking_space         
+land_size             
+condition             
+proximity_to_roads    
+price
+Finally these data sources have been reviewed and verified which make it authentic and highly reliable,
+as it contains valid information for research and analysis.

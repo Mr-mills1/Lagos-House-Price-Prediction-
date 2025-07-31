@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>House Price Prediction</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(60, 72, 88, 0.15);
+            padding: 32px 24px;
+        }
+        h1 {
+            text-align: center;
+            color: #4f46e5;
+            margin-bottom: 24px;
+        }
+        form label {
+            display: block;
+            margin-top: 16px;
+            margin-bottom: 4px;
+            color: #374151;
+            font-weight: 500;
+        }
+        form input, form select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #c7d2fe;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 8px;
+            background: #f1f5f9;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 18px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: #4f46e5;
+        }
+        #result {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 20px;
+            color: #16a34a;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>House Price Prediction</h1>
+        <form id="predictForm">
+            <label for="location">Location:</label>
+            <select id="location" name="location" required>
+                <option value="">Select Location</option>
+                <option value="Lekki">Lekki</option>
+                <option value="Ikoyi">Ikoyi</option>
+                <option value="Victoria Island">Victoria Island</option>
+                <option value="Ajah">Ajah</option>
+                <option value="Yaba">Yaba</option>
+                <option value="Surulere">Surulere</option>
+                <option value="Ikeja">Ikeja</option>
+                <option value="Others">Others</option>
+                <!-- Add more locations as needed -->
+            </select>
+
+            <label for="house_type">House Type:</label>
+            <select id="house_type" name="house_type" required>
+                <option value="">Select House Type</option>
+                <option value="Detached Duplex">Detached Duplex</option>
+                <option value="Semi Detached Duplex">Semi Detached Duplex</option>
+                <option value="Terraced Duplex">Terraced Duplex</option>
+                <option value="Block of Flats">Block of Flats</option>
+                <option value="Bungalow">Bungalow</option>
+                <option value="Apartment">Apartment</option>
+                <!-- Add more house types as needed -->
+            </select>
+
+            <label for="bedrooms">Bedrooms:</label>
+            <input type="number" id="bedrooms" name="bedrooms" min="1" required>
+
+            <label for="parking_space">Parking Space:</label>
+            <input type="number" id="parking_space" name="parking_space" min="0" required>
+
+            <label for="land_size">Land Size (sqm):</label>
+            <input type="number" id="land_size" name="land_size" min="1" required>
+
+            <label for="condition">Condition:</label>
+            <select id="condition" name="condition" required>
+                <option value="">Select Condition</option>
+                <option value="New">New</option>
+                <option value="Renovated">Renovated</option>
+                <option value="Old">Old</option>
+                <!-- Add more conditions as needed -->
+            </select>
+
+            <label for="proximity_to_roads">Proximity to Roads:</label>
+            <input type="text" id="proximity_to_roads" name="proximity_to_roads" required>
+
+            <button type="submit">Predict Price</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById('predictForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const data = {
+                location: document.getElementById('location').value,
+                house_type: document.getElementById('house_type').value,
+                bedrooms: parseInt(document.getElementById('bedrooms').value),
+                parking_space: parseInt(document.getElementById('parking_space').value),
+                land_size: parseFloat(document.getElementById('land_size').value),
+                condition: document.getElementById('condition').value,
+                proximity_to_roads: document.getElementById('proximity_to_roads').value
+            };
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('result').textContent =
+                    `Predicted Price: ₦${Number(result.prediction).toLocaleString()}`;
+            })
+            .catch(error => {
+                document.getElementById('result').textContent = 'Error predicting price.';
+            });
+        });
+    </script>
+</body>
+</html>
